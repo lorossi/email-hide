@@ -21,7 +21,7 @@
     </ul>
     <br><br>
     <p>
-      The generated will then be shown below and you will be able to download it. Just incorporate it inside your web page and say no to spammers!
+      The generated will then be shown and you will be able to download it. Just incorporate it inside your web page and say no to spammers!
     </p>
     
 <h1><a href="https://lorossi.github.io/email-hide/">Try it here!</a></h1>
