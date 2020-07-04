@@ -89,7 +89,7 @@ ul  {
 
 .line[flex="center"] {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .formcontainer {
@@ -115,6 +115,8 @@ form button {
 #download a , #download a:active, #download a:visited {
   color: inherit;
   text-decoration: none;
+  width: 100%;
+  display: block;
 }
 
 

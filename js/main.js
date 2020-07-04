@@ -40,8 +40,9 @@ function generateCode(encoded_container, encoded_email, iterations = 1, obfuscat
     options = {
       deadCodeInjection: true,
       controlFlowFlattening: true,
+      splitStrings: true
     }
-    js_code = JavaScriptObfuscator.obfuscate(js_code).getObfuscatedCode();
+    js_code = JavaScriptObfuscator.obfuscate(js_code, options).getObfuscatedCode();
   }
   return js_code
 }
