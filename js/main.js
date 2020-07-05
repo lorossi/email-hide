@@ -72,11 +72,14 @@ $(document).ready(function() {
   let result_obj = ".scriptcontainer"
 
   // when the text intputs change
-  $(form_obj + " input").change(function() {
+  $(form_obj + " input").on("change keyup paster", function() {
     let all_filled = true;
     // check if both are non empty
     $(form_obj + ' input[type="text"]').each(function() {
+      console.log($(this).val());
+
       if (!$(this).val()) {
+        // if empty
         all_filled = false;
       }
     });
@@ -85,6 +88,11 @@ $(document).ready(function() {
     if (all_filled) {
       $(form_obj + " #generate").each(function() {
         $(this).attr("disabled", false);
+      })
+    } else {
+      // otherwise we disable them both
+      $(form_obj + " #generate").each(function() {
+        $(this).attr("disabled", true);
       })
     }
   })
