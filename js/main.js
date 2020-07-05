@@ -36,19 +36,20 @@ function generateCode(encoded_container, encoded_email, max_iterations=1, obfusc
     index_variable = "i";
   }
 
-  let newl = "\n";
-  let tab = "   "; // 3 spaces
-  let js_code = `window.onload=function ${function_name}(){${newl}${tab}let ${container_variable}="${encoded_container}";${newl}${tab}let ${email_variable}="${encoded_email}";${newl}${tab}for(let ${index_variable}=0;${index_variable}<${max_iterations};${index_variable}++){${newl}${tab}${tab}${container_variable}=atob(${container_variable});${newl}${tab}${tab}${email_variable}=atob(${email_variable});${newl}${tab}}${newl}${tab}document.querySelector(${container_variable}).innerHTML=${email_variable};${newl}}`;
-
-  // strip newlines and tabs
-  if (strip_newlines) {
-    let re = new RegExp(tab, "g");
-    js_code = js_code.replace(re, '');
-    re = new RegExp(newl, "g");
-    js_code = js_code.replace(re, '');
+  // load options into object
+  let options = {
+    "container_variable": container_variable,
+    "encoded_container": encoded_container,
+    "email_variable": email_variable,
+    "encoded_email": encoded_email,
+    "function_name": function_name,
+    "index_variable": index_variable,
+    "max_iterations": max_iterations,
+    "strip_newlines": strip_newlines
   }
+  let js_code = codeTemplate(options)
 
-  // obfuscate - very aggressively
+  // obfuscate - VERY aggressively
   if (obfuscate) {
     let options = {
       deadCodeInjection: true,
