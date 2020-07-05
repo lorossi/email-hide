@@ -76,10 +76,9 @@ $(document).ready(function() {
     let all_filled = true;
     // check if both are non empty
     $(form_obj + ' input[type="text"]').each(function() {
-      console.log($(this).val());
-
+      // if empty
       if (!$(this).val()) {
-        // if empty
+
         all_filled = false;
       }
     });
@@ -90,7 +89,7 @@ $(document).ready(function() {
         $(this).attr("disabled", false);
       })
     } else {
-      // otherwise we disable them both
+      // otherwise we disable it
       $(form_obj + " #generate").each(function() {
         $(this).attr("disabled", true);
       })
@@ -121,5 +120,13 @@ $(document).ready(function() {
     let download = generateDowload(js_code, form_obj + " #download");
     $(form_obj + " #download").attr({"disabled": false});
     $(form_obj + " #download").children().attr({"href": download, "download": "hide-email.js"});
+
+    // enable copy button
+    $(form_obj + " #copy").attr({"disabled": false});
   })
+
+  $(form_obj + " #copy").click(function() {
+    let output = $(result_obj).text();
+    navigator.clipboard.writeText(output);
+  });
 })

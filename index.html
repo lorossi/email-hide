@@ -26,28 +26,31 @@
   <h1>Email Hide</h1>
   <h2>Secause stopping spam is not impossible</h2>
   <p>
-    Whoever needs to publish their email on his personal website knows what's going to happen. <span class="bold">SPAM.</span> <br>
+    Whoever needs to publish their email on their personal website knows what's going to happen. <span class="bold">SPAM.</span> <br>
     A <span class="bold">lot</span> of it.<br>
-    Webcrawlers constantly roam the web, hoping to find some new mails to reap in order to sell gigantic lists to serial spammers.
-    It looks like nobody is ever safe. <br>
+    Webcrawlers constantly roam the web, hoping to find some new mails to reap in order to be sold to spammers.
+    It looks like <span class="bold">nobody</span> is ever safe. <br>
     Luckily, though, that's not true. <br>
     In order to save loading time and processing speed, webcrawlers don't load javscript.
-    To exploit this flaw in our advance, we can hide the emails in a separate script made specifically to inject some text in the DOM. <br>
-    So this program generates a .js script hiding all the constant values with repeated Base64 encoding and will keep you safe from spambots.
+    To exploit this flaw in our advance, we can hide the emails in a separate script made specifically to inject some text in the DOM once the page is loaded. <br>
+    So this program generates a .js script hiding all the sensible information with repeated Base64 encoding and will keep you safe from spambots.
     <br><br>
-    In order to use this program, you have to specify:
+    In order to use this program, you have to enter (in the form below):
   </p>
     <ul>
       <li>The email that you want to hide</li>
       <li>The element that will contain the clear email (using CSS selectors)</li>
       <li>Whether or not you want to hide variables names <span class="bold">(recommended)</span></li>
-      <li>Whether or not you want to use an obfuscator (provided by <a href="https://github.com/javascript-obfuscator/javascript-obfuscator">JavaScriptObfuscator</a>)
+      <li>Whether or not you want to use an obfuscator (provided by <a href="https://github.com/javascript-obfuscator/javascript-obfuscator">JavaScriptObfuscator</a>).
+        <span class="bold">Keep in mind that this will increase the script size by up to 200%.</span>
       <li>Whether or not you want to strip newlines</li>
-      <li>How many Base64 iterations you want to hide your email behind</li>
+      <li>How many Base64 iterations you want to hide your email behind (the more the better, although I'm not sure more than once is necessary)</li>
     </ul>
     <br><br>
     <p>
-      The generated will then be shown below and you will be able to download it. Just incorporate it inside your web page and say no to spammers!
+      The generated will then be shown below and you will be able to download it.
+      Just incorporate it inside your web page (either inline or in a external script)
+      and say no to spammers!
     </p>
     <br><br>
 
@@ -64,13 +67,19 @@
       <input type="text" id="container" name="container">
     </div>
     <div class="line">
-      <label for="hidevariables">Hide variable names</label>
-      <input type="checkbox" id="hidevariables" name="hidevariables">
-      <label for="obfuscator">Run obfuscator</label>
-      <input type="checkbox" id="obfuscator" name="obfuscator">
-      <label for="striplines">Strip newlines</label>
-      <input type="checkbox" id="striplines" name="striplines">
-
+      <span>
+        <label for="hidevariables">Hide variable names</label>
+        <input type="checkbox" id="hidevariables" name="hidevariables">
+      </span>
+      <span>
+        <label for="obfuscator">Run obfuscator</label>
+        <input type="checkbox" id="obfuscator" name="obfuscator">
+      </span>
+      <span>
+        <label for="striplines">Strip newlines</label>
+        <input type="checkbox" id="striplines" name="striplines">
+    </span>
+    <span>
       <label for="iterations">Base64 iterations</label>
       <select name="iterations" id="iterations">
         <option value="0">0</option>
@@ -85,17 +94,21 @@
         <option value="9">9</option>
         <option value="10">10</option>
       </select>
+    </span>
     </div>
     <div class="line" flex="center">
       <button type="button" id="generate" name="generate" disabled="disabled">Generate code</button>
       <button type="button" id="download" name="download" disabled="disabled"><a href="#">Download script</a></button>
+      <button type="button" id="copy" name="copy" disabled="disabled">Copy to clipboard</button>
     </div>
     </form>
   </div>
 
   <pre class="scriptcontainer">
+    Start by inserting your email and the CSS selector for the container
   </pre>
 
+  <p>Obviously, no data is stored in here. I will not sell your email address to spammers, <span class="bold">I promise.</span></p>
   <p>Made by <a href="https://github.com/lorossi">Lorenzo Rossi</a> | GitHub repo <a href="https://github.com/lorossi/email-hide/blob/master/README.md">here</a></p>
 </div>
 </body>
