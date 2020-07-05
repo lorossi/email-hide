@@ -34,7 +34,9 @@ function generateCode(encoded_container, encoded_email, iterations = 1, obfuscat
     index_variable = "i";
   }
 
-  let js_code = `window.onload=function ${function_name}(){\n\tlet ${container_variable}="${encoded_container}";\n\tlet ${email_variable}="${encoded_email}";\n\tfor(let ${index_variable}=0;${index_variable}<${iterations};${index_variable}++){\n\t\t${container_variable}=atob(${container_variable});\n\t\t${email_variable}=atob(${email_variable});\n\t}\n\tdocument.querySelector(${container_variable}).innerHTML=${email_variable};\n}`
+  let newl = "\n";
+  let tab = "   "; // 3 spaces
+  let js_code = `window.onload=function ${function_name}(){${newl}${tab}let ${container_variable}="${encoded_container}";${newl}${tab}let ${email_variable}="${encoded_email}";${newl}${tab}for(let ${index_variable}=0;${index_variable}<${iterations};${index_variable}++){${newl}${tab}${tab}${container_variable}=atob(${container_variable});${newl}${tab}${tab}${email_variable}=atob(${email_variable});${newl}${tab}}${newl}${tab}document.querySelector(${container_variable}).innerHTML=${email_variable};${newl}}`
 
   // strip newlines and tabs
   if (strip_newlines) {
