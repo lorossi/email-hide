@@ -1,7 +1,9 @@
-function encode(text, iterations = 1) {
+"use strict"; // ECMA 6
+
+function encode(text, max_iterations=1) {
   // encodes clear text into Base64 through multiple iterations
   let encoded = text;
-  for (let i = 0; i < iterations; i++) {
+  for (let i = 0; i < max_iterations; i++) {
     encoded = btoa(encoded); // text to Base64
   }
 
@@ -17,7 +19,7 @@ function randHexString(len) {
     return hex_string;
 }
 
-function generateCode(encoded_container, encoded_email, iterations = 1, obfuscate = false, hide_variables = false, strip_newlines = false) {
+function generateCode(encoded_container, encoded_email, max_iterations=1, obfuscate=false, hide_variables=false, strip_newlines=false) {
   // generates js code from templates
   let container_variable, email_variable, function_name, index_variable;
 
@@ -30,30 +32,32 @@ function generateCode(encoded_container, encoded_email, iterations = 1, obfuscat
   } else {
     container_variable = "container";
     email_variable = "email";
-    function_name = "load"
+    function_name = "load";
     index_variable = "i";
   }
 
   let newl = "\n";
   let tab = "   "; // 3 spaces
-  let js_code = `window.onload=function ${function_name}(){${newl}${tab}let ${container_variable}="${encoded_container}";${newl}${tab}let ${email_variable}="${encoded_email}";${newl}${tab}for(let ${index_variable}=0;${index_variable}<${iterations};${index_variable}++){${newl}${tab}${tab}${container_variable}=atob(${container_variable});${newl}${tab}${tab}${email_variable}=atob(${email_variable});${newl}${tab}}${newl}${tab}document.querySelector(${container_variable}).innerHTML=${email_variable};${newl}}`
+  let js_code = `window.onload=function ${function_name}(){${newl}${tab}let ${container_variable}="${encoded_container}";${newl}${tab}let ${email_variable}="${encoded_email}";${newl}${tab}for(let ${index_variable}=0;${index_variable}<${max_iterations};${index_variable}++){${newl}${tab}${tab}${container_variable}=atob(${container_variable});${newl}${tab}${tab}${email_variable}=atob(${email_variable});${newl}${tab}}${newl}${tab}document.querySelector(${container_variable}).innerHTML=${email_variable};${newl}}`;
 
   // strip newlines and tabs
   if (strip_newlines) {
-    js_code = js_code.replace(/\n/g, '');
-    js_code = js_code.replace(/\t/g, '');
+    let re = new RegExp(tab, "g");
+    js_code = js_code.replace(re, '');
+    re = new RegExp(newl, "g");
+    js_code = js_code.replace(re, '');
   }
 
   // obfuscate - very aggressively
   if (obfuscate) {
-    options = {
+    let options = {
       deadCodeInjection: true,
       controlFlowFlattening: true,
       splitStrings: true
-    }
+    };
     js_code = JavaScriptObfuscator.obfuscate(js_code, options).getObfuscatedCode();
   }
-  return js_code
+  return js_code;
 }
 
 function generateDowload(js_code) {
@@ -71,7 +75,7 @@ $(document).ready(function() {
   // form object
   let form_obj = "form";
   // result container
-  let result_obj = ".scriptcontainer"
+  let result_obj = ".scriptcontainer";
 
   // when the text intputs change
   $(form_obj + " input").on("change keyup paster", function() {
@@ -89,14 +93,14 @@ $(document).ready(function() {
     if (all_filled) {
       $(form_obj + " #generate").each(function() {
         $(this).attr("disabled", false);
-      })
+      });
     } else {
       // otherwise we disable it
       $(form_obj + " #generate").each(function() {
         $(this).attr("disabled", true);
-      })
+      });
     }
-  })
+  });
 
   $(form_obj + " #generate").click(function() {
     // nuber of iterations
@@ -109,12 +113,12 @@ $(document).ready(function() {
     let strip_newlines = $(form_obj + " #striplines").prop('checked');
 
     // encode email
-    encoded_email = encode($(form_obj + " #email").val(), iterations);
+    let encoded_email = encode($(form_obj + " #email").val(), iterations);
     // encode container
-    encoded_container = encode($(form_obj + " #container").val(), iterations);
+    let encoded_container = encode($(form_obj + " #container").val(), iterations);
 
     // create code
-    js_code = generateCode(encoded_container, encoded_email, iterations, obfuscate, hide_variables, strip_newlines);
+    let js_code = generateCode(encoded_container, encoded_email, iterations, obfuscate, hide_variables, strip_newlines);
     // add it to result container
     $(result_obj).html(js_code);
 
@@ -125,10 +129,10 @@ $(document).ready(function() {
 
     // enable copy button
     $(form_obj + " #copy").attr({"disabled": false});
-  })
+  });
 
   $(form_obj + " #copy").click(function() {
     let output = $(result_obj).text();
     navigator.clipboard.writeText(output);
   });
-})
+});
