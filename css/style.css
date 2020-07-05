@@ -86,14 +86,13 @@ ul  {
   text-decoration: underline;
 }
 
-.line {
-  padding-bottom: 1vh;
-}
 
 .line {
+  padding-bottom: 1vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .formcontainer {
