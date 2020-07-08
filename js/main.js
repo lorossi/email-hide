@@ -19,7 +19,7 @@ function randHexString(len) {
     return hex_string;
 }
 
-function generateCode(encoded_container, encoded_email, max_iterations=1, obfuscate=false, hide_variables=false, strip_newlines=false, add_mailto=false) {
+function generateCode(encoded_container, encoded_email, max_iterations, obfuscate, hide_variables, strip_newlines, add_mailto, write_email) {
   // generates js code from templates
   let container_variable, email_variable, function_name, index_variable;
 
@@ -46,9 +46,10 @@ function generateCode(encoded_container, encoded_email, max_iterations=1, obfusc
     "index_variable": index_variable,
     "max_iterations": max_iterations,
     "strip_newlines": strip_newlines,
-    "add_mailto": add_mailto
+    "add_mailto": add_mailto,
+    "write_email": write_email
   }
-  let js_code = codeTemplate(options)
+  let js_code = codeTemplate(options);
 
   // obfuscate - VERY aggressively
   if (obfuscate) {
@@ -86,9 +87,10 @@ $(document).ready(function() {
     $(form_obj + ' input[type="text"]').each(function() {
       // if empty
       if (!$(this).val()) {
-
         all_filled = false;
       }
+
+      all_filled &= $(form_obj + " #writeemail").prop('checked') || $(form_obj + " #addmailto").prop('checked');
     });
 
     // if both are filles we enable the "generate code" button
@@ -113,6 +115,8 @@ $(document).ready(function() {
     let hide_variables = $(form_obj + " #hidevariables").prop('checked');
     // strip newlines checkbox
     let strip_newlines = $(form_obj + " #striplines").prop('checked');
+    // write email checkbox
+    let write_email = $(form_obj + " #writeemail").prop('checked');
     // add mailto checkbox
     let add_mailto = $(form_obj + " #addmailto").prop('checked');
 
@@ -122,14 +126,14 @@ $(document).ready(function() {
     let encoded_container = encode($(form_obj + " #container").val(), iterations);
 
     // create code
-    let js_code = generateCode(encoded_container, encoded_email, iterations, obfuscate, hide_variables, strip_newlines, add_mailto);
+    let js_code = generateCode(encoded_container, encoded_email, iterations, obfuscate, hide_variables, strip_newlines, add_mailto, write_email);
     // add it to result container
     $(result_obj).html(js_code);
 
     // add download link to button
     let download = generateDowload(js_code, form_obj + " #download");
     $(form_obj + " #download").attr({"disabled": false});
-    $(form_obj + " #download").children().attr({"href": download, "download": "hide-email.js"});
+    $(form_obj + " #download").children().attr({"href": download, "download": "email-hide.js"});
 
     // enable copy button
     $(form_obj + " #copy").attr({"disabled": false});
