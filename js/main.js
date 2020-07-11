@@ -19,7 +19,7 @@ function randHexString(len) {
     return hex_string;
 }
 
-function generateCode(encoded_container, encoded_email, max_iterations, obfuscate, hide_variables, strip_newlines, add_mailto, write_email) {
+function generateCode(encoded_container, encoded_email, max_iterations, obfuscate, page_loaded, hide_variables, strip_newlines, add_mailto, write_email) {
   // generates js code from templates
   let container_variable, email_variable, function_name, index_variable;
 
@@ -45,6 +45,7 @@ function generateCode(encoded_container, encoded_email, max_iterations, obfuscat
     "function_name": function_name,
     "index_variable": index_variable,
     "max_iterations": max_iterations,
+    "page_loaded": page_loaded,
     "strip_newlines": strip_newlines,
     "add_mailto": add_mailto,
     "write_email": write_email
@@ -119,6 +120,8 @@ $(document).ready(function() {
     let write_email = $(form_obj + " #writeemail").prop('checked');
     // add mailto checkbox
     let add_mailto = $(form_obj + " #addmailto").prop('checked');
+    // wait for page loaded
+    let page_loaded = $(form_obj + " #onload").prop('checked');
 
     // encode email
     let encoded_email = encode($(form_obj + " #email").val(), iterations);
@@ -126,7 +129,7 @@ $(document).ready(function() {
     let encoded_container = encode($(form_obj + " #container").val(), iterations);
 
     // create code
-    let js_code = generateCode(encoded_container, encoded_email, iterations, obfuscate, hide_variables, strip_newlines, add_mailto, write_email);
+    let js_code = generateCode(encoded_container, encoded_email, iterations, obfuscate, page_loaded, hide_variables, strip_newlines, add_mailto, write_email);
     // add it to result container
     $(result_obj).html(js_code);
 

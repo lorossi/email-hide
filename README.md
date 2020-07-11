@@ -16,12 +16,13 @@
   <li>The email that you want to hide</li>
   <li>The element that will contain the clear email (using CSS selectors)</li>
   <li>Whether or not you want to write the email inside your container</li>
-  <li>Whether or not you want to add a <span class="bold">href="mailto:"</span> to your container. In this case, the container must be an HTML link (defined with an &lt;a&gt; tag).</li>
-  <li>Whether or not you want to hide variables names <span class="bold">(recommended)</span></li>
-  <li>Whether or not you want to use an obfuscator (provided by <a href="https://github.com/javascript-obfuscator/javascript-obfuscator">JavaScriptObfuscator</a>).
-    <span class="bold">Keep in mind that this will increase the script size by up to 200%.</span>
-  <li>Whether or not you want to strip newlines</li>
+  <li>Whether or not you want to add a <span class="bold">href="mailto:"</span> to your container. In this case, the container must be an HTML link (defined with an &lt;a&gt; tag)</li>
   <li>How many Base64 iterations you want to hide your email behind (the more the better, although I'm not sure more than once is necessary)</li>
+  <li>Whether or not you want to wait for the page to completely load <span class="bold">(recommended)</span></li>
+  <li>Whether or not you want to hide variables names <span class="bold">(recommended)</span></li>
+  <li>Whether or not you want to use an obfuscator (provided by <a href="https://github.com/javascript-obfuscator/javascript-obfuscator">JavaScriptObfuscator</a>)
+     <span class="bold">Keep in mind that this will increase the script size by up to 200%</span>
+  <li>Whether or not you want to strip newlines</li>
 </ul>
   <br><br>
   <p>

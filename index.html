@@ -35,12 +35,13 @@
             <li>The email that you want to hide</li>
             <li>The element that will contain the clear email (using CSS selectors)</li>
             <li>Whether or not you want to write the email inside your container</li>
-            <li>Whether or not you want to add a <span class="bold">href="mailto:"</span> to your container. In this case, the container must be an HTML link (defined with an &lt;a&gt; tag).</li>
-            <li>Whether or not you want to hide variables names <span class="bold">(recommended)</span></li>
-            <li>Whether or not you want to use an obfuscator (provided by <a href="https://github.com/javascript-obfuscator/javascript-obfuscator">JavaScriptObfuscator</a>).
-               <span class="bold">Keep in mind that this will increase the script size by up to 200%.</span>
-            <li>Whether or not you want to strip newlines</li>
+            <li>Whether or not you want to add a <span class="bold">href="mailto:"</span> to your container. In this case, the container must be an HTML link (defined with an &lt;a&gt; tag)</li>
             <li>How many Base64 iterations you want to hide your email behind (the more the better, although I'm not sure more than once is necessary)</li>
+            <li>Whether or not you want to wait for the page to completely load <span class="bold">(recommended)</span></li>
+            <li>Whether or not you want to hide variables names <span class="bold">(recommended)</span></li>
+            <li>Whether or not you want to use an obfuscator (provided by <a href="https://github.com/javascript-obfuscator/javascript-obfuscator">JavaScriptObfuscator</a>)
+               <span class="bold">Keep in mind that this will increase the script size by up to 200%</span>
+            <li>Whether or not you want to strip newlines</li>
          </ul>
          <br><br>
          <p>
@@ -53,7 +54,7 @@
          <div class="formcontainer">
             <form>
                <div class="line">
-                  <label for="email">Your email</label>
+                  <label for="email">your email</label>
                   <input type="text" id="email" name="email">
                </div>
                <div class="line">
@@ -62,11 +63,11 @@
                </div>
                <div class="line">
                   <span>
-                  <label for="writeemail">Write email in container</label>
+                  <label for="writeemail">write email in container</label>
                   <input type="checkbox" id="writeemail" name="writeemail">
                   </span>
                   <span>
-                  <label for="addmailto">Add mailto in href</label>
+                  <label for="addmailto">add mailto in href</label>
                   <input type="checkbox" id="addmailto" name="addmailto">
                   </span>
                   <span>
@@ -88,16 +89,20 @@
                   </span>
                </div>
                <div class="line">
+                 <span>
+                 <label for="onload">wait for page load</label>
+                 <input type="checkbox" id="onload" name="onload", checked="checked">
+                 </span>
                   <span>
-                  <label for="hidevariables">Hide variable names</label>
+                  <label for="hidevariables">hide variable names</label>
                   <input type="checkbox" id="hidevariables" name="hidevariables">
                   </span>
                   <span>
-                  <label for="obfuscator">Run obfuscator</label>
+                  <label for="obfuscator">run obfuscator</label>
                   <input type="checkbox" id="obfuscator" name="obfuscator">
                   </span>
                   <span>
-                  <label for="striplines">Strip newlines</label>
+                  <label for="striplines">strip newlines</label>
                   <input type="checkbox" id="striplines" name="striplines">
                   </span>
                </div>
