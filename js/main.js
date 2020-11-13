@@ -19,19 +19,21 @@ function randHexString(len) {
     return hex_string;
 }
 
-function generateCode(encoded_container, encoded_email, max_iterations, obfuscate, page_loaded, hide_variables, strip_newlines, add_mailto, write_email) {
+function generateCode(encoded_container, encoded_email, encoded_label, max_iterations, obfuscate, page_loaded, hide_variables, strip_newlines, add_mailto) {
   // generates js code from templates
-  let container_variable, email_variable, function_name, index_variable;
+  let container_variable, email_variable, label_variable, function_name, index_variable;
 
   // hide variables names
   if (hide_variables) {
     container_variable = randHexString(6);
     email_variable = randHexString(6);
+    label_variable = randHexString(6);
     function_name = randHexString(6);
     index_variable = randHexString(6);
   } else {
     container_variable = "container";
     email_variable = "email";
+    label_variable = "label";
     function_name = "load";
     index_variable = "i";
   }
@@ -42,13 +44,14 @@ function generateCode(encoded_container, encoded_email, max_iterations, obfuscat
     "encoded_container": encoded_container,
     "email_variable": email_variable,
     "encoded_email": encoded_email,
+    "label_variable": label_variable,
+    "encoded_label": encoded_label,
     "function_name": function_name,
     "index_variable": index_variable,
     "max_iterations": max_iterations,
     "page_loaded": page_loaded,
     "strip_newlines": strip_newlines,
     "add_mailto": add_mailto,
-    "write_email": write_email
   }
   let js_code = codeTemplate(options);
 
@@ -91,10 +94,10 @@ $(document).ready(function() {
         all_filled = false;
       }
 
-      all_filled &= $(form_obj + " #writeemail").prop('checked') || $(form_obj + " #addmailto").prop('checked');
+      all_filled &= $(form_obj + " #addmailto").prop('checked') || $(form_obj + " #label").val().length > 0;
     });
 
-    // if both are filles we enable the "generate code" button
+    // if both are filled we enable the "generate code" button
     if (all_filled) {
       $(form_obj + " #generate").each(function() {
         $(this).attr("disabled", false);
@@ -116,8 +119,6 @@ $(document).ready(function() {
     let hide_variables = $(form_obj + " #hidevariables").prop('checked');
     // strip newlines checkbox
     let strip_newlines = $(form_obj + " #striplines").prop('checked');
-    // write email checkbox
-    let write_email = $(form_obj + " #writeemail").prop('checked');
     // add mailto checkbox
     let add_mailto = $(form_obj + " #addmailto").prop('checked');
     // wait for page loaded
@@ -128,8 +129,13 @@ $(document).ready(function() {
     // encode container
     let encoded_container = encode($(form_obj + " #container").val(), iterations);
 
+    let encoded_label;
+    if ($(form_obj + " #label").val()) {
+      encoded_label = encode($(form_obj + " #label").val(), iterations);
+    }
+
     // create code
-    let js_code = generateCode(encoded_container, encoded_email, iterations, obfuscate, page_loaded, hide_variables, strip_newlines, add_mailto, write_email);
+    let js_code = generateCode(encoded_container, encoded_email, encoded_label, iterations, obfuscate, page_loaded, hide_variables, strip_newlines, add_mailto);
     // add it to result container
     $(result_obj).html(js_code);
 

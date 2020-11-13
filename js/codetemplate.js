@@ -9,7 +9,7 @@ function codeTemplate(options) {
     tab = "";
   } else {
     newl = "\n";
-    tab = "   "; // 3 spaces tab
+    tab = "\t";
   }
 
   if (options.page_loaded) {
@@ -22,19 +22,19 @@ function codeTemplate(options) {
 
   if (options.max_iterations == 1) {
     // only one base64 encoding
-    js_code += `${tab}let ${options.container_variable}=atob("${options.encoded_container}");${newl}${tab}let ${options.email_variable}=atob("${options.encoded_email}");${newl}`;
+    js_code += `${tab}let ${options.container_variable}=atob("${options.encoded_container}");${newl}${tab}let ${options.email_variable}=atob("${options.encoded_email}");let ${options.label_variable}=atob("${options.encoded_label}");${newl}`;
   } else if (options.max_iterations > 1) {
     // multiple base64 encodings
-    js_code += `${tab}let ${options.container_variable}="${options.encoded_container}";${newl}${tab}let ${options.email_variable}="${options.encoded_email}";${newl}${tab}for(let ${options.index_variable}=0;${options.index_variable}<${options.max_iterations};${options.index_variable}++){${newl}${tab}${tab}${options.container_variable}=atob(${options.container_variable});${newl}${tab}${tab}${options.email_variable}=atob(${options.email_variable});${newl}${tab}}${newl}`;
+    js_code += `${tab}let ${options.container_variable}="${options.encoded_container}";${newl}${tab}let ${options.email_variable}="${options.encoded_email}";${newl}${tab}let ${options.label_variable}="${options.encoded_label}";${newl}${tab}for(let ${options.index_variable}=0;${options.index_variable}<${options.max_iterations};${options.index_variable}++){${newl}${tab}${tab}${options.container_variable}=atob(${options.container_variable});${newl}${tab}${tab}${options.email_variable}=atob(${options.email_variable});${newl}${tab}${tab}${options.label_variable}=atob(${options.label_variable});${newl}${tab}}${newl}`;
   }
 
-  if (options.write_email) {
-    if (options.max_iterations == 0) {
-      js_code += `${tab}document.querySelector("${options.encoded_container}").innerHTML="${options.encoded_email}";${newl}`;
-    } else {
-      js_code += `${tab}document.querySelector(${options.container_variable}).innerHTML=${options.email_variable};${newl}`;
-    }
+  // write label
+  if (options.max_iterations == 0) {
+    js_code += `${tab}document.querySelector("${options.encoded_container}").innerHTML="${options.encoded_label}";${newl}`;
+  } else {
+    js_code += `${tab}document.querySelector(${options.container_variable}).innerHTML=${options.label_variable};${newl}`;
   }
+
 
   if (options.add_mailto) {
     // add mailto to a container
@@ -44,7 +44,11 @@ function codeTemplate(options) {
       js_code += `${tab}document.querySelector(${options.container_variable}).href="mailto:"+${options.email_variable};${newl}}`;
     }
   } else {
-    js_code += `}`;
+    if (options.max_iterations == 0) {
+      js_code += `${tab}document.querySelector("${options.encoded_container}").href="${options.encoded_email}";${newl}}`;
+    } else {
+      js_code += `${tab}document.querySelector(${options.container_variable}).href=${options.email_variable};${newl}}`;
+    }
   }
 
   if (!options.page_loaded) {

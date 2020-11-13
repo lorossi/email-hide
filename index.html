@@ -20,12 +20,12 @@
          <h1>Email Hide</h1>
          <h2>Secause stopping spam is not impossible</h2>
          <p>
-            Whoever needs to publish their email on their personal website knows what's going to happen. <span class="bold">SPAM.</span> <br>
+            Whoever needs to publish their email (or any link to a public page, for all that matters) on their personal website knows what's going to happen. <span class="bold">SPAM.</span> <br>
             A <span class="bold">lot</span> of it.<br>
-            Webcrawlers constantly roam the web, hoping to find some new mails to reap in order to be sold to spammers.
+            Webcrawlers constantly roam the web, hoping to find some new mails and new links to reap in order to be sold to spammers.
             It looks like <span class="bold">nobody</span> is ever safe. <br>
             Luckily, though, that's not true. <br>
-            In order to save loading time and processing speed, webcrawlers don't load javscript.
+            In order to save loading time and processing speed to increase their malicious potential, webcrawlers don't load javscript files.
             To exploit this flaw in our advance, we can hide the emails in a separate script made specifically to inject some text in the DOM once the page is loaded. <br>
             So this program generates a .js script hiding all the sensible information with repeated Base64 encoding and will keep you safe from spambots.
             <br><br>
@@ -33,8 +33,8 @@
          </p>
          <ul>
             <li>The email that you want to hide</li>
+            <li>A custom label for the container</li>
             <li>The element that will contain the clear email (using CSS selectors)</li>
-            <li>Whether or not you want to write the email inside your container</li>
             <li>Whether or not you want to add a <span class="bold">href="mailto:"</span> to your container. In this case, the container must be an HTML link (defined with an &lt;a&gt; tag)</li>
             <li>How many Base64 iterations you want to hide your email behind (the more the better, although I'm not sure more than once is necessary)</li>
             <li>Whether or not you want to wait for the page to completely load <span class="bold">(recommended)</span></li>
@@ -58,19 +58,22 @@
                   <input type="text" id="email" name="email">
                </div>
                <div class="line">
+                  <label for="label">custom text for container</label>
+                  <input type="text" id="label" name="label">
+               </div>
+               <div class="line">
                   <label for="container">CSS selector for container</label>
                   <input type="text" id="container" name="container">
                </div>
                <div class="line">
                   <span>
-                  <label for="writeemail">write email in container</label>
-                  <input type="checkbox" id="writeemail" name="writeemail">
-                  </span>
-                  <span>
                   <label for="addmailto">add mailto in href</label>
                   <input type="checkbox" id="addmailto" name="addmailto">
                   </span>
                   <span>
+                  <label for="hidevariables">hide variable names</label>
+                  <input type="checkbox" id="hidevariables" name="hidevariables">
+                  </span>
                   <span>
                      <label for="iterations">Base64 iterations</label>
                      <select name="iterations" id="iterations">
@@ -93,10 +96,6 @@
                  <label for="onload">wait for page load</label>
                  <input type="checkbox" id="onload" name="onload", checked="checked">
                  </span>
-                  <span>
-                  <label for="hidevariables">hide variable names</label>
-                  <input type="checkbox" id="hidevariables" name="hidevariables">
-                  </span>
                   <span>
                   <label for="obfuscator">run obfuscator</label>
                   <input type="checkbox" id="obfuscator" name="obfuscator">
