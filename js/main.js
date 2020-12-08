@@ -57,7 +57,7 @@ let generateCode = (parameters) => {
   let js_code = codeTemplate(options);
 
   // obfuscate - VERY aggressively
-  if (obfuscate) {
+  if (parameters.obfuscate) {
     let options = {
       deadCodeInjection: true,
       controlFlowFlattening: true,
