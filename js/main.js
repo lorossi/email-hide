@@ -140,7 +140,7 @@ $(document).ready(() => {
       "encoded_container": encoded_container,
       "encoded_email": encoded_email,
       "encoded_label": encoded_label,
-      "iterations": iterations,
+      "max_iterations": iterations,
       "obfuscate": obfuscate,
       "page_loaded": page_loaded,
       "hide_variables": hide_variables,
