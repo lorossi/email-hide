@@ -1,4 +1,6 @@
-function codeTemplate(options) {
+/* jshint esversion: 8 */
+
+let codeTemplate = (options) => {
   // generate and returns js code used to hide email.
 
   let newl, tab, js_code;
@@ -57,4 +59,4 @@ function codeTemplate(options) {
   }
 
   return js_code;
-}
+};

@@ -1,6 +1,7 @@
+/* jshint esversion: 6 */
 "use strict"; // ECMA 6
 
-function encode(text, max_iterations=1) {
+let encode = (text, max_iterations=1) => {
   // encodes clear text into Base64 through multiple iterations
   let encoded = text;
   for (let i = 0; i < max_iterations; i++) {
@@ -8,23 +9,23 @@ function encode(text, max_iterations=1) {
   }
 
   return encoded;
-}
+};
 
-function randHexString(len) {
+let randHexString = (len) => {
   // generates random hex string of set length
     let hex_string = "_0x";
     for (let i = 0; i < len; ++i) {
         hex_string += (Math.floor(Math.random() * 16)).toString(16);
     }
     return hex_string;
-}
+};
 
-function generateCode(encoded_container, encoded_email, encoded_label, max_iterations, obfuscate, page_loaded, hide_variables, strip_newlines, add_mailto) {
+let generateCode = (parameters) => {
   // generates js code from templates
   let container_variable, email_variable, label_variable, function_name, index_variable;
 
   // hide variables names
-  if (hide_variables) {
+  if (parameters.hide_variables) {
     container_variable = randHexString(6);
     email_variable = randHexString(6);
     label_variable = randHexString(6);
@@ -41,18 +42,18 @@ function generateCode(encoded_container, encoded_email, encoded_label, max_itera
   // load options into object
   let options = {
     "container_variable": container_variable,
-    "encoded_container": encoded_container,
+    "encoded_container": parameters.encoded_container,
     "email_variable": email_variable,
-    "encoded_email": encoded_email,
+    "encoded_email": parameters.encoded_email,
     "label_variable": label_variable,
-    "encoded_label": encoded_label,
+    "encoded_label": parameters.encoded_label,
     "function_name": function_name,
     "index_variable": index_variable,
-    "max_iterations": max_iterations,
-    "page_loaded": page_loaded,
-    "strip_newlines": strip_newlines,
-    "add_mailto": add_mailto,
-  }
+    "max_iterations": parameters.max_iterations,
+    "page_loaded": parameters.page_loaded,
+    "strip_newlines": parameters.strip_newlines,
+    "add_mailto": parameters.add_mailto,
+  };
   let js_code = codeTemplate(options);
 
   // obfuscate - VERY aggressively
@@ -65,9 +66,9 @@ function generateCode(encoded_container, encoded_email, encoded_label, max_itera
     js_code = JavaScriptObfuscator.obfuscate(js_code, options).getObfuscatedCode();
   }
   return js_code;
-}
+};
 
-function generateDowload(js_code) {
+let generateDowload = (js_code) => {
     // create downloadable file
     let prefix = "data:text/plain;base64,";
     let output_encoded;
@@ -75,10 +76,10 @@ function generateDowload(js_code) {
     // base64 encoding because firefox doesn't like plaintext
     output_encoded = prefix + btoa(js_code);
     return output_encoded;
-}
+};
 
 
-$(document).ready(function() {
+$(document).ready(() => {
   // form object
   let form_obj = "form";
   // result container
@@ -134,8 +135,21 @@ $(document).ready(function() {
       encoded_label = encode($(form_obj + " #label").val(), iterations);
     }
 
+    // options for generateCode
+    let options = {
+      "encoded_container": encoded_container,
+      "encoded_email": encoded_email,
+      "encoded_label": encoded_label,
+      "iterations": iterations,
+      "obfuscate": obfuscate,
+      "page_loaded": page_loaded,
+      "hide_variables": hide_variables,
+      "strip_newlines": strip_newlines,
+      "add_mailto": add_mailto
+    };
+
     // create code
-    let js_code = generateCode(encoded_container, encoded_email, encoded_label, iterations, obfuscate, page_loaded, hide_variables, strip_newlines, add_mailto);
+    let js_code = generateCode(options);
     // add it to result container
     $(result_obj).html(js_code);
 
